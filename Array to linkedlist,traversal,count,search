@@ -1,0 +1,66 @@
+package LinkedList;
+
+import java.util.*;
+
+class Node{
+    int data;
+    Node next;
+    Node(int data){
+        this.data=data;
+        this.next=null;
+    }
+}
+public class BasicLinkedList {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.println("Enter the number of elements in the array: ");
+        int n=in.nextInt();
+        int[] arr=new int[n];
+        System.out.println("Enter the elements of the array: ");
+        for(int i=0;i<n;i++) {
+            arr[i] = in.nextInt();
+        }
+        Node head=new Node(arr[0]);
+        Node move=head;
+        for(int i=1;i<n;i++){
+            Node temp=new Node(arr[i]);
+            move.next=temp;
+            temp.next=null;
+            move=move.next;
+        }
+        System.out.println("The head of this linked list is"+head.data);
+        System.out.println("The traversing route of linked list is: ");
+        traverse(head);
+        System.out.println("The no. of nodes in the linkedlist is: "+countNode(head));
+        int num=searchElement(head,6);
+        if(num==0) System.out.println("Not found the element");
+        else System.out.println("Found the element");
+    }
+    public static void traverse(Node head){
+        if(head==null) System.out.println("Linked list is empty");
+        Node temp=head;
+        while(temp!=null){
+            System.out.println(temp.data+" ");
+            temp=temp.next;
+        }
+    }
+    public static int countNode(Node head){
+        if(head==null) return 0;
+        Node temp=head;
+        int cnt=0;
+        while(temp!=null){
+            temp=temp.next;
+            cnt++;
+        }
+        return cnt;
+    }
+    public static int searchElement(Node head,int val){
+        if(head==null) return 0;
+        Node temp=head;
+        while(temp!=null){
+            if(temp.data==val)return 1;
+            temp=temp.next;
+        }
+        return 0;
+    }
+}
