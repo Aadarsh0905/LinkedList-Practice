@@ -1,0 +1,350 @@
+package LinkedList;
+import java.util.*;
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int data) {
+        this.val = data;
+        this.next = null;
+    }
+}
+
+public class DeletionOfNodeInPlace {
+
+    public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
+        ListNode head = null;
+
+        while (true) {
+            System.out.println("\nChoose an operation:");
+            System.out.println("1. Insert First");
+            System.out.println("2. Insert Last");
+            System.out.println("3. Insert Before Given Value");
+            System.out.println("4. Insert at Kth Position");
+            System.out.println("5. Delete First");
+            System.out.println("6. Delete Last");
+            System.out.println("7. Delete Given Value");
+            System.out.println("8. Delete at Kth Position");
+            System.out.println("9. Print List");
+            System.out.println("10. Exit");
+
+            System.out.print("Enter choice: ");
+            int choice = in.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter value: ");
+                    head = insertFirstNode(head, in.nextInt());
+                    break;
+
+                case 2:
+                    System.out.print("Enter value: ");
+                    head = insertLastNode(head, in.nextInt());
+                    break;
+
+                case 3:
+                    System.out.print("Enter value to insert: ");
+                    int val = in.nextInt();
+                    System.out.print("Insert before which value: ");
+                    int key = in.nextInt();
+                    head = insertBeforeValue(head, val, key);
+                    break;
+
+                case 4:
+                    System.out.print("Enter value: ");
+                    int v = in.nextInt();
+                    System.out.print("Enter position: ");
+                    int k = in.nextInt();
+                    head = insertAtKthPosition(head, v, k);
+                    break;
+
+                case 5:
+                    head = deleteFirstNode(head);
+                    break;
+
+                case 6:
+                    head = deleteLastNode(head);
+                    break;
+
+                case 7:
+                    System.out.print("Enter value to delete: ");
+                    head = deleteNodeValue(head, in.nextInt());
+                    break;
+
+                case 8:
+                    System.out.print("Enter position: ");
+                    head = deleteIndexNode(head, in.nextInt());
+                    break;
+
+                case 9:
+                    printList(head);
+                    break;
+
+                case 10:
+                    System.out.println("Exiting...");
+                    return;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+    }
+
+    // ================= DELETE OPERATIONS =================
+
+    public static ListNode deleteFirstNode(ListNode head) {
+        if (head == null) return null;
+        return head.next;
+    }
+
+    public static ListNode deleteLastNode(ListNode head) {
+        if (head == null || head.next == null) return null;
+
+        ListNode temp = head;
+        while (temp.next.next != null) {
+            temp = temp.next;
+        }
+        temp.next = null;
+        return head;
+    }
+
+    public static ListNode deleteIndexNode(ListNode head, int k) {
+        if (head == null) return null;
+        if (k == 1) return deleteFirstNode(head);
+
+        ListNode temp = head;
+        int cnt = 1;
+
+        while (temp.next != null) {
+            if (cnt == k - 1) {
+                temp.next = temp.next.next;
+                break;
+            }
+            temp = temp.next;
+            cnt++;
+        }
+        return head;
+    }
+
+    public static ListNode deleteNodeValue(ListNode head, int value) {
+        if (head == null) return null;
+
+        if (head.val == value) return head.next;
+
+        ListNode temp = head;
+        while (temp.next != null) {
+            if (temp.next.val == value) {
+                temp.next = temp.next.next;
+                break;
+            }
+            temp = temp.next;
+        }
+        return head;
+    }
+
+    // ================= INSERT OPERATIONS =================
+
+    public static ListNode insertFirstNode(ListNode head, int val) {
+        ListNode newNode = new ListNode(val);
+        newNode.next = head;
+        return newNode;
+    }
+
+    public static ListNode insertLastNode(ListNode head, int val) {
+        ListNode newNode = new ListNode(val);
+
+        if (head == null) return newNode;
+
+        ListNode temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.next = newNode;
+        return head;
+    }
+
+    public static ListNode insertAtKthPosition(ListNode head, int val, int k) {
+        if (k == 1) return insertFirstNode(head, val);
+
+        ListNode temp = head;
+        int cnt = 1;
+
+        while (temp != null) {
+            if (cnt == k - 1) {
+                ListNode newNode = new ListNode(val);
+                newNode.next = temp.next;
+                temp.next = newNode;
+                break;
+            }
+            temp = temp.next;
+            cnt++;
+        }
+        return head;
+    }
+
+    public static ListNode insertBeforeValue(ListNode head, int val, int key) {
+        if (head == null) return null;
+
+        if (head.val == key) return insertFirstNode(head, val);
+
+        ListNode temp = head;
+        while (temp.next != null) {
+            if (temp.next.val == key) {
+                ListNode newNode = new ListNode(val);
+                newNode.next = temp.next;
+                temp.next = newNode;
+                break;
+            }
+            temp = temp.next;
+        }
+        return head;
+    }
+
+    // ================= PRINT =================
+
+    public static void printList(ListNode head) {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        ListNode temp = head;
+        while (temp != null) {
+            System.out.print(temp.val + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("null");
+    }
+}
+
+//public static ListNode deleteFirstNode(ListNode head){
+//        if(head==null)return head;
+//        head=head.next;
+//        return head;
+//    }
+////    public static ListNode deleteLastNode(ListNode head){
+////        if(head==null)return head;
+////        ListNode ptr=head;
+////        ListNode preptr=null;
+////        while(ptr>next!=null){
+////            preptr=ptr;
+////            ptr=ptr.next;
+////        }
+////        preptr.next=null;
+////        return preptr;
+////    }
+//    public static ListNode deleteLastNode(ListNode head){
+//        if(head==null||head.next!=null)return head;
+//        ListNode temp=head;
+//        while(temp.next.next!=null){
+//            temp=temp.next;
+//        }
+//        temp.next=null;
+//        return head;
+//    }
+//    public static ListNode deleteIndexNode(ListNode head,int k){
+//        if(head==null||head.next==null)return head;
+//        if(k==1)return deleteFirstNode(head);
+//        ListNode temp=head;
+//        int cnt=1;
+//        while(temp.next!=null && temp!=null){
+//            if(cnt==k-1){
+//                temp.next=temp.next.next;
+//                break;
+//            }
+//            temp=temp.next;
+//            cnt++;
+//        }
+//        return head;
+//    }
+//    public static ListNode deleteNodeValue(ListNode head,int value){
+//        if(head==null || head.next==null)return head;
+//        if(head.val==value){
+//            head=head.next;
+//            return head;
+//        }
+//        ListNode temp=head;
+//        while(temp.next!=null){
+//            if(temp.next.val==value){
+//                temp.next=temp.next.next;
+//                break;
+//            }
+//            temp=temp.next;
+//        }
+//        return head;
+//    }
+//    public static ListNode insertFirstNode(ListNode head,int val){
+//        if(head==null){
+//            ListNode Node =new ListNode(val);
+//            head=Node;
+//            return head;
+//        }
+//        ListNode newNode=new ListNode(val);
+//        newNode.next=head;
+//        head=newNode;
+//        return head;
+//    }
+//
+//    public static ListNode insertLastNode(ListNode head, int val){
+//        if(head==null){
+//            ListNode newNode=new ListNode(val);
+//            head=newNode;
+//            return head;
+//        }
+//        ListNode newNode=new ListNode(val);
+//        ListNode temp=head;
+//        while(temp.next!=null){
+//            temp=temp.next;
+//        }
+//        temp.next=newNode;
+//        return head;
+//    }
+//
+//    public static ListNode insertAtKthPosition(ListNode head,int val,int k){
+//        if(head==null){
+//            if(k==1){
+//                ListNode newNode=new ListNode(val);
+//                head=newNode;
+//                return head;
+//            }
+//            else return null;
+//        }
+//        if(k==1) return insertFirstNode(head,val);
+//        int cnt=0;
+//        ListNode temp=head;
+//        while(temp!=null){
+//            cnt++;
+//            if(cnt==k-1){
+//                ListNode newNode=new ListNode(val);
+//                newNode.next=temp.next;
+//                temp.next=newNode;
+//                break;
+//            }
+//            temp=temp.next;
+//        }
+//        return head;
+//    }
+//    public static ListNode insertBeforeValue(ListNode head,int val,int k){
+//        if(head==null)return null;
+//        if(head.val==k){
+//            ListNode newNode=new ListNode(val);
+//            newNode.next=head;
+//            head=newNode;
+//            return head;
+//        }
+//        ListNode temp=head;
+//        while(temp.next!=null){
+//            if(temp.next.val==k){
+//                ListNode newNode=new ListNode(val);
+//                newNode.next=temp.next;
+//                temp.next=newNode;
+//                break;
+//            }
+//            temp=temp.next;
+//        }
+//        return head;
+//    }
+
