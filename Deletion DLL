@@ -1,0 +1,65 @@
+package LinkedList.DoublyLInkedList;
+
+class Node{
+    int data;
+    Node prev;
+    Node next;
+    Node (int data){
+        this.data=data;
+        this.next=null;
+        this.prev=null;
+    }
+}
+public class DeleteOperation {
+    public static void main(String[] args) {
+    
+    }
+
+    public static Node DeleteFirstNode(Node head){
+        if(head==null||head.next==null)return null;
+        head=head.next;
+        return head;
+    }
+    public static Node DeleteLastNode(Node head){
+        if(head==null||head.next==null)return null;
+        Node temp=head;
+        while(temp.next.next!=null){
+            temp=temp.next;
+        }
+        temp.next=null;
+        return head;
+    }
+    public static Node DeleteNodeKthElement(Node head,int k){
+        if(head==null)return null;
+        if(k<=0)return head;
+        if(k==1)return DeleteFirstNode(head);
+        int cnt=0;
+        Node temp=head;
+        while(temp.next!=null){
+            cnt++;
+            if(cnt==k-1){
+                if(temp.next.next!=null)temp.next.next.prev=temp;
+                temp.next=temp.next.next;
+                break;
+            }
+            temp=temp.next;
+        }
+        return head;
+    }
+    public static Node DeleteNodeValue(Node head,int val){
+        if(head==null)return null;
+        if(head.data==val)return DeleteFirstNode(head);
+        Node temp=head;
+        while(temp.next!=null){
+            if(temp.next.data==val){
+                if(temp.next.next!=null){
+                    temp.next.next.prev=temp;
+                }
+                temp.next=temp.next.next;
+                break;
+            }
+            temp=temp.next;
+        }
+        return head;
+    }
+}
